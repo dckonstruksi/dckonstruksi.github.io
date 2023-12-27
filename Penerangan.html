@@ -49,9 +49,11 @@
                 <div class="col-md-12 text-center">
                    <h1>PENERANGAN</h1>
                 </div>
+                <br> <br><div class="col-md-12 text-center"><span>PT LASKAR BUAH INDONESIA</span></div>
                 <br>
                 <br>
-                <form name="submit-to-google-sheet">
+                <br>
+                <form name="proyek-penerangan">
                     <div class="mb-3">
                         <div class="alert alert-info alert-dismissible fade show d-none" role="alert">
                             <strong>BERHASIL!!</strong> Terima kasih
@@ -72,7 +74,7 @@
                     <div class="mb-3">
                         <input name="nama_toko" id="nama_toko" type="text" class="form-control" placeholder="Nama Toko" required>
                       </div>
-                      <select class="form-select mb-3" aria-label="Default select example" id="nama_toko" name="nama_toko" required>
+                      <select class="form-select mb-3" aria-label="Default select example" id="item" name="item" required>
                         <option value="HOLO GALVANIS 4X4">HOLO GALVANIS 4X4</option>
                         <option value="CAT PUTIH BESI">CAT PUTIH BESI</option>
                         <option value="DRYLLING 2,5CM">DRYLLING 2,5CM</option>
@@ -126,4 +128,31 @@
             </div>
         </div>
 </body>
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby_z3jr0wURPaUlFCKV7n1vB6WEWd-YHhUKLnIYQ1e5keuK8eZwngf7wGzskvoNp6He/exec'
+
+  const form = document.forms['proyek-penerangan']
+  const btnKirim = document.querySelector('#btnKirim')
+  const btnLoading = document.querySelector('#btnLoading')
+  const alert = document.querySelector('.alert')
+  const alert1 = document.querySelector('.alert1')
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    btnLoading.classList.toggle('d-none');
+    btnKirim.classList.toggle('d-none');
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+          btnLoading.classList.toggle('d-none');
+          btnKirim.classList.toggle('d-none');
+          alert.classList.toggle('d-none');
+          console.log('Success!', response)
+          form.reset();
+      })
+      .catch(error => {
+          alert1.classList.toggle('alert1');
+          console.error('Error!', error.message)
+      })
+  })
+</script>
 </html>
